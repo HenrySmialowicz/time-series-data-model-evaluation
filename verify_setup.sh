@@ -29,10 +29,23 @@ done
 
 # Check conda environment
 echo "4. Conda environment:"
-if conda env list | grep -q expanded_gametime; then
-    echo "  ✓ expanded_gametime environment exists"
+# Try to load conda module first
+if module avail 2>&1 | grep -q "miniforge"; then
+    module load $(module avail miniforge 2>&1 | grep miniforge | head -1 | awk '{print $1}') 2>/dev/null
+elif module avail 2>&1 | grep -q "anaconda"; then
+    module load $(module avail anaconda 2>&1 | grep anaconda | tail -1 | awk '{print $1}') 2>/dev/null
+fi
+
+# Initialize conda
+if command -v conda &> /dev/null; then
+    eval "$(conda shell.bash hook)" 2>/dev/null
+    if conda env list | grep -q expanded_gametime; then
+        echo "  ✓ expanded_gametime environment exists"
+    else
+        echo "  ✗ expanded_gametime environment not found"
+    fi
 else
-    echo "  ✗ expanded_gametime environment not found"
+    echo "  ✗ conda command not available (will be loaded during job execution)"
 fi
 
 # Check modules (if on Rivanna)

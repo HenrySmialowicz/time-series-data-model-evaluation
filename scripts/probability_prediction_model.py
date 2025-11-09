@@ -20,11 +20,11 @@ class ProbabilityPredictor(nn.Module):
         self.prediction_mode = prediction_mode
         
         # Load tokenizer and model
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="left")
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name, padding_side="left", use_safetensors=True)
         if self.tokenizer.pad_token is None:
             self.tokenizer.pad_token = self.tokenizer.eos_token
         
-        self.language_model = AutoModel.from_pretrained(model_name)
+        self.language_model = AutoModel.from_pretrained(model_name, use_safetensors=True)
         
         # Probability sequence encoder
         self.prob_encoder = nn.LSTM(

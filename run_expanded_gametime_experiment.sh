@@ -1,14 +1,4 @@
 #!/bin/bash
-#SBATCH --job-name=expanded_gametime
-#SBATCH --output=logs/experiment_%j.out
-#SBATCH --error=logs/experiment_%j.err
-#SBATCH --time=12:00:00
-#SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=32GB
-#SBATCH --gres=gpu:1
-#SBATCH --partition=gpu
 
 # =============================================================================
 # Complete Expanded GAMETime Experiment Master Script
@@ -60,10 +50,9 @@ fi
 log "Using allocation: $SLURM_JOB_ACCOUNT"
 
 # Load modules
-log "Loading required modules..."
-module load miniforge/22.11.1-4
-module load cuda/11.8
-module load gcc/9.2.0
+# Modules are now loaded by the wrapper script
+log "Modules loaded by wrapper - skipping module loading"
+module list
 
 # Activate environment
 log "Activating conda environment..."
@@ -164,8 +153,8 @@ log "Phase 4: Model Training"
 
 # Define models and modes to train
 declare -a MODELS=(
-    "microsoft/DialoGPT-medium"
-    "Qwen/Qwen2.5-1.5B-Instruct"
+    "distilbert-base-uncased"
+    "bert-base-uncased"
 )
 
 declare -a MODES=("direct" "change")

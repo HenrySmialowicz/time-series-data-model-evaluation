@@ -1,2 +1,41 @@
+# Data directories
 data/
 GAMETime/
+
+# Model checkpoints (large files)
+models/
+*.pth
+*.bin
+*.safetensors
+
+# Results
+results/
+
+# Logs
+logs/
+*.log
+*.out
+*.err
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environment
+.env
+*.swp
+*.swo
+*~
+
+# Backup files
+*_backup.sh
+
+# Large external repos
+open-r1/
